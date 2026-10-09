@@ -1,0 +1,3 @@
+[submodule "MFEngine/vendor/spdlog"]
+	path = MFEngine/vendor/spdlog
+	url = https://github.com/gabime/spdlog.git
