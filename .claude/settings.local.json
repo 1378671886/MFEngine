@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmake --version)",
+      "Bash(g++ --version)",
+      "Bash(cl)",
+      "Bash(msbuild -version)",
+      "Bash(make --version)",
+      "Bash(mingw32-make --version)",
+      "Bash(ninja --version)",
+      "Bash(xxd MFEngine/src/test.h)",
+      "Bash(gdb --version)",
+      "Bash(code --list-extensions)",
+      "Bash(g++ -dumpmachine)",
+      "Bash(objdump -p bin/MFEngine.dll)",
+      "Bash(nm -C bin/MFEngine.dll)",
+      "Bash(g++ -shared -std=c++17 -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_BUILD_DLL -o bin/MFEngine.dll MFEngine/src/MFEngine/Application.cpp -IMFEngine/src)",
+      "Bash(echo \"--- exit: $? ---\")",
+      "Bash(g++ -g -std=c++17 -DMFENGINE_PLATFORM_WINDOWS -o bin/Sandbox.exe Sandbox/src/SandboxApp.cpp -IMFEngine/src bin/MFEngine.dll)",
+      "Read(//d/VSCodeProgram/.vscode//**)",
+      "Read(//d/VSCodeProgram//**)"
+    ]
+  }
+}

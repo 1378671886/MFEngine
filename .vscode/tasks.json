@@ -1,0 +1,46 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build dll",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-shared",
+                "-std=c++17",
+                "-DMFENGINE_PLATFORM_WINDOWS",
+                "-DMFENGINE_BUILD_DLL",
+                "-o", "${workspaceFolder}/bin/MFEngine.dll",
+                "${workspaceFolder}/MFEngine/src/MFEngine/Application.cpp",
+                "-I${workspaceFolder}/MFEngine/src"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "build sandbox",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-std=c++17",
+                "-DMFENGINE_PLATFORM_WINDOWS",
+                "-o", "${workspaceFolder}/bin/Sandbox.exe",
+                "${workspaceFolder}/Sandbox/src/SandboxApp.cpp",
+                "-I${workspaceFolder}/MFEngine/src",
+                "${workspaceFolder}/bin/MFEngine.dll"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": ["build dll"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}
