@@ -12,7 +12,8 @@
                 "-DMFENGINE_BUILD_DLL",
                 "-o", "${workspaceFolder}/bin/MFEngine.dll",
                 "${workspaceFolder}/MFEngine/src/MFEngine/Application.cpp",
-                "-I${workspaceFolder}/MFEngine/src"
+                "-I${workspaceFolder}/MFEngine/src",
+                "-I${workspaceFolder}/MFEngine/vendor/spdlog/include"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -30,6 +31,7 @@
                 "-o", "${workspaceFolder}/bin/Sandbox.exe",
                 "${workspaceFolder}/Sandbox/src/SandboxApp.cpp",
                 "-I${workspaceFolder}/MFEngine/src",
+                "-I${workspaceFolder}/MFEngine/vendor/spdlog/include",
                 "${workspaceFolder}/bin/MFEngine.dll"
             ],
             "options": {

@@ -3,7 +3,8 @@
         {
             "name": "MinGW",
             "includePath": [
-                "${workspaceFolder}/MFEngine/src"
+                "${workspaceFolder}/MFEngine/src",
+                "${workspaceFolder}/MFEngine/vendor/spdlog/include"
             ],
             "defines": [
                 "MFENGINE_PLATFORM_WINDOWS"

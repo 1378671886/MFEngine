@@ -18,7 +18,8 @@
       "Bash(echo \"--- exit: $? ---\")",
       "Bash(g++ -g -std=c++17 -DMFENGINE_PLATFORM_WINDOWS -o bin/Sandbox.exe Sandbox/src/SandboxApp.cpp -IMFEngine/src bin/MFEngine.dll)",
       "Read(//d/VSCodeProgram/.vscode//**)",
-      "Read(//d/VSCodeProgram//**)"
+      "Read(//d/VSCodeProgram//**)",
+      "Bash(git submodule *)"
     ]
   }
 }

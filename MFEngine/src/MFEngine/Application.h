@@ -12,4 +12,8 @@ namespace MFEngine
 
         void Run();
     };
+
+    //在客户端中定义
+    Application* CreateApplication();
+
 }
