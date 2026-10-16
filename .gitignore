@@ -1,0 +1,14 @@
+# 编译产物
+bin/
+bin-int/
+
+# 编辑器
+.vs/
+.idea/
+
+# 系统文件
+Thumbs.db
+Desktop.ini
+
+# Claude Code 本地设置（含个人权限配置，不提交）
+.claude/settings.local.json
