@@ -11,8 +11,8 @@
                 "-DMFENGINE_PLATFORM_WINDOWS",
                 "-DMFENGINE_BUILD_DLL",
                 "-o", "${workspaceFolder}/bin/MFEngine.dll",
-                "${workspaceFolder}/MFEngine/src/MFEngine/Application.cpp",
-                "${workspaceFolder}/MFEngine/src/MFEngine/Log.cpp",
+                "${workspaceFolder}/MFEngine/src/MFEngine/Core/Application.cpp",
+                "${workspaceFolder}/MFEngine/src/MFEngine/Core/Log.cpp",
                 "-I${workspaceFolder}/MFEngine/src",
                 "-I${workspaceFolder}/MFEngine/vendor/spdlog/include"
             ],

@@ -1,9 +1,9 @@
 #pragma once
 
 //使用Applicaition
-#include "MFEngine/Application.h"
-#include "MFEngine/Log.h"
+#include "MFEngine/Core/Application.h"
+#include "MFEngine/Core/Log.h"
 
 
 //入口点
-#include "MFEngine/EntryPoint.h"
+#include "MFEngine/Core/EntryPoint.h"

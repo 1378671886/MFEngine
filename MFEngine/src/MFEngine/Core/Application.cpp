@@ -1,5 +1,8 @@
 #include "Application.h"
 
+#include "MFEngine/Events/ApplicaitionEvent.h"
+#include "Log.h"
+
 namespace MFEngine
 {
     Application::Application()
@@ -12,6 +15,9 @@ namespace MFEngine
 
     void Application::Run()
     {
+        WindowResizeEvent e(1280, 720);
+        MFENGINE_TRACE(e.ToString());
+
         while (true);
     }
 }
