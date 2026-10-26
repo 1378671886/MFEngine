@@ -1,8 +1,6 @@
 #pragma once
 
 #include "MFEngine/Events/Event.h"
-#include <sstream>
-
 
 namespace MFEngine {
 

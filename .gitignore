@@ -1,6 +1,7 @@
 # 编译产物
 bin/
 bin-int/
+*.gch
 
 # 编辑器
 .vs/

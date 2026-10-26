@@ -2,6 +2,24 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "build pch",
+            "detail": "可选：把 mfpch.h 预编译成 mfpch.h.gch，加速 build dll（DLL 的编译参数要和这里一致）",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-DMFENGINE_PLATFORM_WINDOWS",
+                "-DMFENGINE_BUILD_DLL",
+                "-x", "c++-header",
+                "-o", "${workspaceFolder}/MFEngine/src/mfpch.h.gch",
+                "${workspaceFolder}/MFEngine/src/mfpch.h"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
             "label": "build dll",
             "type": "shell",
             "command": "g++",
@@ -10,6 +28,7 @@
                 "-std=c++17",
                 "-DMFENGINE_PLATFORM_WINDOWS",
                 "-DMFENGINE_BUILD_DLL",
+                "-include", "${workspaceFolder}/MFEngine/src/mfpch.h",
                 "-o", "${workspaceFolder}/bin/MFEngine.dll",
                 "${workspaceFolder}/MFEngine/src/MFEngine/Core/Application.cpp",
                 "${workspaceFolder}/MFEngine/src/MFEngine/Core/Log.cpp",
@@ -29,6 +48,7 @@
                 "-g",
                 "-std=c++17",
                 "-DMFENGINE_PLATFORM_WINDOWS",
+                "-include", "${workspaceFolder}/MFEngine/src/mfpch.h",
                 "-o", "${workspaceFolder}/bin/Sandbox.exe",
                 "${workspaceFolder}/Sandbox/src/SandboxApp.cpp",
                 "-I${workspaceFolder}/MFEngine/src",

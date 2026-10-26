@@ -1,3 +1,4 @@
+#include "mfpch.h"
 #include "Application.h"
 
 #include "MFEngine/Events/ApplicaitionEvent.h"

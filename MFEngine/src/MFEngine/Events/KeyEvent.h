@@ -3,8 +3,6 @@
 #include "MFEngine/Events/Event.h"
 #include "MFEngine/Core/KeyCodes.h"
 
-#include <sstream>
-
 namespace MFEngine {
 
 	class KeyEvent : public Event

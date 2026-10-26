@@ -18,6 +18,9 @@ project "MFEngine"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "mfpch.h"
+    pchsource "MFEngine/src/mfpch.cpp"
+
     files
     {
         "%{prj.name}/src/**.h",
@@ -77,6 +80,9 @@ project "Sandbox"
         "MFEngine/vendor/spdlog/include",
         "MFEngine/src"
     }
+
+    filter "system:windows"
+        forceincludes { "mfpch.h" }
 
     links
     {

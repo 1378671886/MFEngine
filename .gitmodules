@@ -1,3 +1,6 @@
 [submodule "MFEngine/vendor/spdlog"]
 	path = MFEngine/vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "MFEngine/vendor/glfw"]
+	path = MFEngine/vendor/glfw
+	url = https://github.com/TheCherno/glfw

@@ -3,8 +3,6 @@
 #include "MFEngine/Events/Event.h"
 #include "MFEngine/Core/MouseCodes.h"
 
-#include <sstream>
-
 namespace MFEngine {
 
 	class MouseMovedEvent : public Event

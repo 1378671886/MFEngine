@@ -2,9 +2,6 @@
 
 #include "MFEngine/Core/Core.h"
 
-#include <functional>
-#include <string>
-
 namespace MFEngine
 {
 	/*I hear that from the Cherno :
