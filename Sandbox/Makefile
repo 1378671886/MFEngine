@@ -28,8 +28,8 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-INCLUDES += -I../MFEngine/vendor/spdlog/include -I../MFEngine/src
-FORCE_INCLUDE +=
+INCLUDES += -I../MFEngine/vendor/spdlog/include -I../MFEngine/vendor/glfw/include -I../MFEngine/src
+FORCE_INCLUDE += -include mfpch.h
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
 LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -47,8 +47,8 @@ OBJDIR = ../bin-int/Debug-windows-x86_64/Sandbox
 DEFINES += -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_DEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++17
-LIBS += ../bin/Debug-windows-x86_64/MFEngine/MFEngine.lib
-LDDEPS += ../bin/Debug-windows-x86_64/MFEngine/MFEngine.lib
+LIBS += ../MFEngine/vendor/glfw/bin/Debug-windows-x86_64/GLFW/GLFW.lib ../bin/Debug-windows-x86_64/MFEngine/MFEngine.lib
+LDDEPS += ../MFEngine/vendor/glfw/bin/Debug-windows-x86_64/GLFW/GLFW.lib ../bin/Debug-windows-x86_64/MFEngine/MFEngine.lib
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64
 
 else ifeq ($(config),release)
@@ -58,8 +58,8 @@ OBJDIR = ../bin-int/Release-windows-x86_64/Sandbox
 DEFINES += -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_RELEASE
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
-LIBS += ../bin/Release-windows-x86_64/MFEngine/MFEngine.lib
-LDDEPS += ../bin/Release-windows-x86_64/MFEngine/MFEngine.lib
+LIBS += ../MFEngine/vendor/glfw/bin/Release-windows-x86_64/GLFW/GLFW.lib ../bin/Release-windows-x86_64/MFEngine/MFEngine.lib
+LDDEPS += ../MFEngine/vendor/glfw/bin/Release-windows-x86_64/GLFW/GLFW.lib ../bin/Release-windows-x86_64/MFEngine/MFEngine.lib
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -s
 
 else ifeq ($(config),dist)
@@ -69,8 +69,8 @@ OBJDIR = ../bin-int/Dist-windows-x86_64/Sandbox
 DEFINES += -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_DIST
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
-LIBS += ../bin/Dist-windows-x86_64/MFEngine/MFEngine.lib
-LDDEPS += ../bin/Dist-windows-x86_64/MFEngine/MFEngine.lib
+LIBS += ../MFEngine/vendor/glfw/bin/Dist-windows-x86_64/GLFW/GLFW.lib ../bin/Dist-windows-x86_64/MFEngine/MFEngine.lib
+LDDEPS += ../MFEngine/vendor/glfw/bin/Dist-windows-x86_64/GLFW/GLFW.lib ../bin/Dist-windows-x86_64/MFEngine/MFEngine.lib
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -s
 
 endif

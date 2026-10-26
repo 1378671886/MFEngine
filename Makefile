@@ -9,14 +9,17 @@ ifndef verbose
 endif
 
 ifeq ($(config),debug)
+  GLFW_config = debug
   MFEngine_config = debug
   Sandbox_config = debug
 
 else ifeq ($(config),release)
+  GLFW_config = release
   MFEngine_config = release
   Sandbox_config = release
 
 else ifeq ($(config),dist)
+  GLFW_config = dist
   MFEngine_config = dist
   Sandbox_config = dist
 
@@ -24,25 +27,32 @@ else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := MFEngine Sandbox
+PROJECTS := GLFW MFEngine Sandbox
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-MFEngine:
+GLFW:
+ifneq (,$(GLFW_config))
+	@echo "==== Building GLFW ($(GLFW_config)) ===="
+	@${MAKE} --no-print-directory -C MFEngine/vendor/glfw -f Makefile config=$(GLFW_config)
+endif
+
+MFEngine: GLFW
 ifneq (,$(MFEngine_config))
 	@echo "==== Building MFEngine ($(MFEngine_config)) ===="
 	@${MAKE} --no-print-directory -C MFEngine -f Makefile config=$(MFEngine_config)
 endif
 
-Sandbox: MFEngine
+Sandbox: GLFW MFEngine
 ifneq (,$(Sandbox_config))
 	@echo "==== Building Sandbox ($(Sandbox_config)) ===="
 	@${MAKE} --no-print-directory -C Sandbox -f Makefile config=$(Sandbox_config)
 endif
 
 clean:
+	@${MAKE} --no-print-directory -C MFEngine/vendor/glfw -f Makefile clean
 	@${MAKE} --no-print-directory -C MFEngine -f Makefile clean
 	@${MAKE} --no-print-directory -C Sandbox -f Makefile clean
 
@@ -57,6 +67,7 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
+	@echo "   GLFW"
 	@echo "   MFEngine"
 	@echo "   Sandbox"
 	@echo ""

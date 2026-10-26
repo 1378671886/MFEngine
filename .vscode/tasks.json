@@ -20,6 +20,20 @@
             "problemMatcher": ["$gcc"]
         },
         {
+            "label": "build glfw",
+            "detail": "把 vendor/glfw 的 Windows 源码编译成静态库 bin/libglfw3.a（dll 和 sandbox 链接用）",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "if not exist bin-int\\glfw mkdir bin-int\\glfw && (for %f in (context init input monitor null_init null_joystick null_monitor null_window platform vulkan window egl_context osmesa_context win32_init win32_joystick win32_module win32_monitor win32_time win32_thread win32_window wgl_context) do @gcc -c -O2 -D_GLFW_WIN32 -D_CRT_SECURE_NO_WARNINGS -I MFEngine/vendor/glfw/include -o bin-int/glfw/%f.o MFEngine/vendor/glfw/src/%f.c) && ar rcs bin/libglfw3.a bin-int/glfw/*.o"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
             "label": "build dll",
             "type": "shell",
             "command": "g++",
@@ -32,12 +46,17 @@
                 "-o", "${workspaceFolder}/bin/MFEngine.dll",
                 "${workspaceFolder}/MFEngine/src/MFEngine/Core/Application.cpp",
                 "${workspaceFolder}/MFEngine/src/MFEngine/Core/Log.cpp",
+                "${workspaceFolder}/MFEngine/src/MFEngine/Core/Window.cpp",
+                "${workspaceFolder}/MFEngine/src/Platform/WindowsWindow.cpp",
                 "-I${workspaceFolder}/MFEngine/src",
-                "-I${workspaceFolder}/MFEngine/vendor/spdlog/include"
+                "-I${workspaceFolder}/MFEngine/vendor/spdlog/include",
+                "-I${workspaceFolder}/MFEngine/vendor/glfw/include",
+                "${workspaceFolder}/bin/libglfw3.a"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
+            "dependsOn": ["build glfw"],
             "problemMatcher": ["$gcc"]
         },
         {
@@ -53,6 +72,8 @@
                 "${workspaceFolder}/Sandbox/src/SandboxApp.cpp",
                 "-I${workspaceFolder}/MFEngine/src",
                 "-I${workspaceFolder}/MFEngine/vendor/spdlog/include",
+                "-I${workspaceFolder}/MFEngine/vendor/glfw/include",
+                "${workspaceFolder}/bin/libglfw3.a",
                 "${workspaceFolder}/bin/MFEngine.dll"
             ],
             "options": {

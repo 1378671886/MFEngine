@@ -28,15 +28,13 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-PCH = ../MFEnginePCH.h
+PCH = src/mfpch.h
 PCH_PLACEHOLDER = $(OBJDIR)/$(notdir $(PCH))
 GCH = $(PCH_PLACEHOLDER).gch
-INCLUDES += -Isrc -Ivendor/spdlog/include
+INCLUDES += -Isrc -Ivendor/spdlog/include -Ivendor/glfw/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LIBS +=
-LDDEPS +=
 LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 endef
@@ -50,6 +48,8 @@ OBJDIR = ../bin-int/Debug-windows-x86_64/MFEngine
 DEFINES += -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_BUILD_DLL -DMFENGINE_DEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++17
+LIBS += vendor/glfw/bin/Debug-windows-x86_64/GLFW/GLFW.lib
+LDDEPS += vendor/glfw/bin/Debug-windows-x86_64/GLFW/GLFW.lib
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Debug-windows-x86_64/MFEngine/MFEngine.lib"
 define POSTBUILDCMDS
 	@echo Running postbuild commands
@@ -63,6 +63,8 @@ OBJDIR = ../bin-int/Release-windows-x86_64/MFEngine
 DEFINES += -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_BUILD_DLL -DMFENGINE_RELEASE
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
+LIBS += vendor/glfw/bin/Release-windows-x86_64/GLFW/GLFW.lib
+LDDEPS += vendor/glfw/bin/Release-windows-x86_64/GLFW/GLFW.lib
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Release-windows-x86_64/MFEngine/MFEngine.lib" -s
 define POSTBUILDCMDS
 	@echo Running postbuild commands
@@ -76,6 +78,8 @@ OBJDIR = ../bin-int/Dist-windows-x86_64/MFEngine
 DEFINES += -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_BUILD_DLL -DMFENGINE_DIST
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
+LIBS += vendor/glfw/bin/Dist-windows-x86_64/GLFW/GLFW.lib
+LDDEPS += vendor/glfw/bin/Dist-windows-x86_64/GLFW/GLFW.lib
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Dist-windows-x86_64/MFEngine/MFEngine.lib" -s
 define POSTBUILDCMDS
 	@echo Running postbuild commands

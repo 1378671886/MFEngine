@@ -10,6 +10,9 @@ workspace "MFEngine"
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+    -- 引入 GLFW 子模块自带的 premake5.lua，生成 GLFW 静态库工程
+    include "MFEngine/vendor/glfw"
+
 project "MFEngine"
     location "MFEngine"
     kind "SharedLib"
@@ -27,10 +30,23 @@ project "MFEngine"
         "%{prj.name}/src/**.cpp"
     }
 
+    -- 这两个文件是从教程后面的章节复制的，依赖还没实现的 Input / PlatformUtils，暂时不参与编译
+    removefiles
+    {
+        "MFEngine/src/Platform/WindowsInput.cpp",
+        "MFEngine/src/Platform/WindowsPlatformUtils.cpp"
+    }
+
     includedirs
     {
         "%{prj.name}/src",
-        "%{prj.name}/vendor/spdlog/include"
+        "%{prj.name}/vendor/spdlog/include",
+        "%{prj.name}/vendor/glfw/include"
+    }
+
+    links
+    {
+        "GLFW"
     }
 
     filter "system:windows"
@@ -78,6 +94,7 @@ project "Sandbox"
     includedirs
     {
         "MFEngine/vendor/spdlog/include",
+        "MFEngine/vendor/glfw/include",
         "MFEngine/src"
     }
 
@@ -86,6 +103,7 @@ project "Sandbox"
 
     links
     {
+        "GLFW",
         "MFEngine"
     }
 
