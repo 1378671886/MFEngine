@@ -60,6 +60,15 @@ project "MFEngine"
             "MFENGINE_BUILD_DLL"
         }
 
+        -- GLFW 的 Windows 实现要用到这些系统库，Cherno 的 premake5.lua 里没写，需要自己补
+        links
+        {
+            "opengl32",
+            "gdi32",
+            "user32",
+            "shell32"
+        }
+
         postbuildcommands
         {
             ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")

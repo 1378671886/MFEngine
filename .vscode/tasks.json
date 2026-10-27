@@ -2,89 +2,22 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build pch",
-            "detail": "可选：把 mfpch.h 预编译成 mfpch.h.gch，加速 build dll（DLL 的编译参数要和这里一致）",
+            "label": "build",
+            "detail": "增量+并行构建：只重编改动过的文件。产物在 bin/Debug-windows-x86_64/。SHELL=cmd.exe 是给 premake 生成的 postbuild（xcopy）用的",
             "type": "shell",
-            "command": "g++",
+            "command": "mingw32-make",
             "args": [
-                "-std=c++17",
-                "-DMFENGINE_PLATFORM_WINDOWS",
-                "-DMFENGINE_BUILD_DLL",
-                "-x", "c++-header",
-                "-o", "${workspaceFolder}/MFEngine/src/mfpch.h.gch",
-                "${workspaceFolder}/MFEngine/src/mfpch.h"
+                "-j8",
+                "SHELL=cmd.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": ["$gcc"]
-        },
-        {
-            "label": "build glfw",
-            "detail": "把 vendor/glfw 的 Windows 源码编译成静态库 bin/libglfw3.a（dll 和 sandbox 链接用）",
-            "type": "shell",
-            "command": "cmd",
-            "args": [
-                "/c",
-                "if not exist bin-int\\glfw mkdir bin-int\\glfw && (for %f in (context init input monitor null_init null_joystick null_monitor null_window platform vulkan window egl_context osmesa_context win32_init win32_joystick win32_module win32_monitor win32_time win32_thread win32_window wgl_context) do @gcc -c -O2 -D_GLFW_WIN32 -D_CRT_SECURE_NO_WARNINGS -I MFEngine/vendor/glfw/include -o bin-int/glfw/%f.o MFEngine/vendor/glfw/src/%f.c) && ar rcs bin/libglfw3.a bin-int/glfw/*.o"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": ["$gcc"]
-        },
-        {
-            "label": "build dll",
-            "type": "shell",
-            "command": "g++",
-            "args": [
-                "-shared",
-                "-std=c++17",
-                "-DMFENGINE_PLATFORM_WINDOWS",
-                "-DMFENGINE_BUILD_DLL",
-                "-include", "${workspaceFolder}/MFEngine/src/mfpch.h",
-                "-o", "${workspaceFolder}/bin/MFEngine.dll",
-                "${workspaceFolder}/MFEngine/src/MFEngine/Core/Application.cpp",
-                "${workspaceFolder}/MFEngine/src/MFEngine/Core/Log.cpp",
-                "${workspaceFolder}/MFEngine/src/MFEngine/Core/Window.cpp",
-                "${workspaceFolder}/MFEngine/src/Platform/WindowsWindow.cpp",
-                "-I${workspaceFolder}/MFEngine/src",
-                "-I${workspaceFolder}/MFEngine/vendor/spdlog/include",
-                "-I${workspaceFolder}/MFEngine/vendor/glfw/include",
-                "${workspaceFolder}/bin/libglfw3.a"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "dependsOn": ["build glfw"],
-            "problemMatcher": ["$gcc"]
-        },
-        {
-            "label": "build sandbox",
-            "type": "shell",
-            "command": "g++",
-            "args": [
-                "-g",
-                "-std=c++17",
-                "-DMFENGINE_PLATFORM_WINDOWS",
-                "-include", "${workspaceFolder}/MFEngine/src/mfpch.h",
-                "-o", "${workspaceFolder}/bin/Sandbox.exe",
-                "${workspaceFolder}/Sandbox/src/SandboxApp.cpp",
-                "-I${workspaceFolder}/MFEngine/src",
-                "-I${workspaceFolder}/MFEngine/vendor/spdlog/include",
-                "-I${workspaceFolder}/MFEngine/vendor/glfw/include",
-                "${workspaceFolder}/bin/libglfw3.a",
-                "${workspaceFolder}/bin/MFEngine.dll"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "dependsOn": ["build dll"],
+            "problemMatcher": ["$gcc"],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "problemMatcher": ["$gcc"]
+            }
         }
     ]
 }

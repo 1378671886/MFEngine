@@ -48,7 +48,7 @@ OBJDIR = ../bin-int/Debug-windows-x86_64/MFEngine
 DEFINES += -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_BUILD_DLL -DMFENGINE_DEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++17
-LIBS += vendor/glfw/bin/Debug-windows-x86_64/GLFW/GLFW.lib
+LIBS += vendor/glfw/bin/Debug-windows-x86_64/GLFW/GLFW.lib -lopengl32 -lgdi32 -luser32 -lshell32
 LDDEPS += vendor/glfw/bin/Debug-windows-x86_64/GLFW/GLFW.lib
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Debug-windows-x86_64/MFEngine/MFEngine.lib"
 define POSTBUILDCMDS
@@ -63,7 +63,7 @@ OBJDIR = ../bin-int/Release-windows-x86_64/MFEngine
 DEFINES += -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_BUILD_DLL -DMFENGINE_RELEASE
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
-LIBS += vendor/glfw/bin/Release-windows-x86_64/GLFW/GLFW.lib
+LIBS += vendor/glfw/bin/Release-windows-x86_64/GLFW/GLFW.lib -lopengl32 -lgdi32 -luser32 -lshell32
 LDDEPS += vendor/glfw/bin/Release-windows-x86_64/GLFW/GLFW.lib
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Release-windows-x86_64/MFEngine/MFEngine.lib" -s
 define POSTBUILDCMDS
@@ -78,7 +78,7 @@ OBJDIR = ../bin-int/Dist-windows-x86_64/MFEngine
 DEFINES += -DMFENGINE_PLATFORM_WINDOWS -DMFENGINE_BUILD_DLL -DMFENGINE_DIST
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
-LIBS += vendor/glfw/bin/Dist-windows-x86_64/GLFW/GLFW.lib
+LIBS += vendor/glfw/bin/Dist-windows-x86_64/GLFW/GLFW.lib -lopengl32 -lgdi32 -luser32 -lshell32
 LDDEPS += vendor/glfw/bin/Dist-windows-x86_64/GLFW/GLFW.lib
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Dist-windows-x86_64/MFEngine/MFEngine.lib" -s
 define POSTBUILDCMDS
@@ -100,9 +100,13 @@ OBJECTS :=
 
 GENERATED += $(OBJDIR)/Application.o
 GENERATED += $(OBJDIR)/Log.o
+GENERATED += $(OBJDIR)/Window.o
+GENERATED += $(OBJDIR)/WindowsWindow.o
 GENERATED += $(OBJDIR)/mfpch.o
 OBJECTS += $(OBJDIR)/Application.o
 OBJECTS += $(OBJDIR)/Log.o
+OBJECTS += $(OBJDIR)/Window.o
+OBJECTS += $(OBJDIR)/WindowsWindow.o
 OBJECTS += $(OBJDIR)/mfpch.o
 
 # Rules
@@ -171,6 +175,12 @@ $(OBJDIR)/Application.o: src/MFEngine/Core/Application.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Log.o: src/MFEngine/Core/Log.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Window.o: src/MFEngine/Core/Window.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/WindowsWindow.o: src/Platform/WindowsWindow.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/mfpch.o: src/mfpch.cpp

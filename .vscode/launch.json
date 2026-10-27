@@ -5,11 +5,16 @@
             "name": "Debug Sandbox",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Sandbox.exe",
+            "program": "${workspaceFolder}/bin/Debug-windows-x86_64/Sandbox/Sandbox.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
+            "environment": [
+                {
+                    "name": "PATH",
+                    "value": "D:/MinGW/mingw64/bin;${env:PATH}"
+                }
+            ],
             "externalConsole": true,
             "MIMode": "gdb",
             "miDebuggerPath": "D:/MinGW/mingw64/bin/gdb.exe",
@@ -18,9 +23,14 @@
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
+                },
+                {
+                    "description": "允许在 DLL 尚未加载时先给引擎代码下断点",
+                    "text": "set breakpoint pending on",
+                    "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "build sandbox"
+            "preLaunchTask": "build"
         }
     ]
 }

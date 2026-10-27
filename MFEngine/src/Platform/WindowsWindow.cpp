@@ -42,9 +42,12 @@ namespace MFEngine {
 		}
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		glfwMakeContextCurrent(m_Window);
 		++s_GLFWWindowCount;
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
+		// 目前还没有创建 OpenGL context，此时调 glfwSwapInterval 会报 GLFW_NO_WINDOW_CONTEXT，
+		// 等教程讲到 OpenGLContext 那一节、在 Init 里创建并 MakeCurrent 之后再取消下面这行注释
 		SetVSync(true);
 
 		// Set GLFW callbacks
@@ -152,6 +155,7 @@ namespace MFEngine {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
+		glfwSwapBuffers(m_Window);
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
