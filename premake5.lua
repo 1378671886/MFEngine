@@ -10,8 +10,70 @@ workspace "MFEngine"
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-    -- 引入 GLFW 子模块自带的 premake5.lua，生成 GLFW 静态库工程
-    include "MFEngine/vendor/glfw"
+    -- GLFW 官方源码（MFEngine/vendor/glfw 是 git submodule，来自 github.com/glfw/glfw）
+    -- 官方仓库不带 premake 脚本，所以在这里定义工程；location 保持在 vendor/glfw，
+    -- 生成的 Makefile 和 GLFW.lib 位置与以前一致。
+    project "GLFW"
+        location "MFEngine/vendor/glfw"
+        kind "StaticLib"
+        language "C"
+        staticruntime "off"
+        warnings "off"
+
+        targetdir ("MFEngine/vendor/glfw/bin/" .. outputdir .. "/%{prj.name}")
+        objdir ("MFEngine/vendor/glfw/bin-int/" .. outputdir .. "/%{prj.name}")
+
+        files
+        {
+            "MFEngine/vendor/glfw/include/GLFW/glfw3.h",
+            "MFEngine/vendor/glfw/include/GLFW/glfw3native.h",
+
+            "MFEngine/vendor/glfw/src/context.c",
+            "MFEngine/vendor/glfw/src/init.c",
+            "MFEngine/vendor/glfw/src/input.c",
+            "MFEngine/vendor/glfw/src/monitor.c",
+            "MFEngine/vendor/glfw/src/platform.c",
+            "MFEngine/vendor/glfw/src/vulkan.c",
+            "MFEngine/vendor/glfw/src/window.c",
+
+            "MFEngine/vendor/glfw/src/null_init.c",
+            "MFEngine/vendor/glfw/src/null_joystick.c",
+            "MFEngine/vendor/glfw/src/null_monitor.c",
+            "MFEngine/vendor/glfw/src/null_window.c",
+        }
+
+        filter "system:windows"
+            systemversion "latest"
+
+            files
+            {
+                "MFEngine/vendor/glfw/src/win32_init.c",
+                "MFEngine/vendor/glfw/src/win32_joystick.c",
+                "MFEngine/vendor/glfw/src/win32_module.c",
+                "MFEngine/vendor/glfw/src/win32_monitor.c",
+                "MFEngine/vendor/glfw/src/win32_time.c",
+                "MFEngine/vendor/glfw/src/win32_thread.c",
+                "MFEngine/vendor/glfw/src/win32_window.c",
+                "MFEngine/vendor/glfw/src/wgl_context.c",
+                "MFEngine/vendor/glfw/src/egl_context.c",
+                "MFEngine/vendor/glfw/src/osmesa_context.c",
+            }
+
+            defines
+            {
+                "_GLFW_WIN32",
+                "_CRT_SECURE_NO_WARNINGS",
+            }
+
+        filter "configurations:Debug"
+            symbols "on"
+
+        filter "configurations:Release"
+            optimize "speed"
+
+        filter "configurations:Dist"
+            optimize "speed"
+            symbols "off"
 
 project "MFEngine"
     location "MFEngine"
