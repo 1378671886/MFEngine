@@ -1,15 +1,19 @@
 # 编译产物
-bin/
-bin-int/
+# 注意用 /bin/ 锚定根目录：写成 bin/ 会把 vendor/premake/bin/premake5.exe 一起忽略掉
+/bin/
+/bin-int/
 *.gch
 
 # 编辑器
 .vs/
 .idea/
+.vscode/ipch/
+compile_commands.json
 
 # 系统文件
 Thumbs.db
 Desktop.ini
+.DS_Store
 
 # Claude Code 本地设置（含个人权限配置，不提交）
 .claude/settings.local.json
